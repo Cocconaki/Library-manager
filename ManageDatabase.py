@@ -13,7 +13,7 @@ class DatabaseConnection:
         self.connection.commit()
         return self
     
-    def __exit__(self):
+    def __exit__(self, exc_type, exc_value, traceback):
         self.connection.close()
 
 
@@ -49,10 +49,10 @@ class DatabaseConnection:
         self.cursor.execute("""
         CREATE TABLE IF NOT EXISTS borrowed_books (
             user_id INTEGER,
-            books_id INTEGER,
+            book_id INTEGER,
             borrow_date TEXT DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users(id),
-            FOREIGN KEY (books_id) REFERENCES books(id)
+            FOREIGN KEY (book_id) REFERENCES books(id)
         )
         """)
 
