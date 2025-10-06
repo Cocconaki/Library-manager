@@ -4,14 +4,20 @@ class DatabaseConnection:
     
 
     def __init__(self, db_name="BooksInLibrary.db"):
-        self.connection = sqlite3.connect(db_name)
+       self.db_name = db_name
+
+    def __enter__(self):
+        self.connection = sqlite3.connect(self.db_name)
         self.cursor = self.connection.cursor()
         self.cursor.execute("PRAGMA foreign_keys = ON")
         self.connection.commit()
+        return self
+    
+    def __exit__(self):
+        self.connection.close()
 
 
 
-    @staticmethod
     def init_database(self):
 
         
@@ -53,7 +59,6 @@ class DatabaseConnection:
         self.connection.commit()
 
     
-    @staticmethod
     def reinit_database(self):
         self.cursor.execute("SELECT name FROM sqlite_master WHERE type='table' ")
         tables = self.cursor.fetchall()
@@ -62,7 +67,6 @@ class DatabaseConnection:
         self.connection.commit()
         self.init_database()
     
-    @staticmethod
     def close(self):
         self.connection.close()
     
