@@ -1,24 +1,6 @@
-from Container import *
+from ManageDatabase import *
 
 
-import sqlite3
-connection = sqlite3.connect("BooksInLibrary.db")
-cursor = connection.cursor()
-
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS books (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    number_of_pages INTEGER,
-    author TEXT NOT NULL,
-    category TEXT,
-    title TEXT NOT NULL,
-    is_available BOOLEAN,
-    count INTEGER
-)
-""")
-
-connection.commit()
 
 
 class ControlFlow:
@@ -38,7 +20,7 @@ class ControlFlow:
 
     def delete_book():
         id_to_del = int(input("Enter books ID to delete: "))
-        name_to_del = str(input("Enter books name to delete: "))
+        cursor.execute("DELETE FROM books WHERE id = ?", (id_to_del,))
 
     def show_all_books():
         
@@ -47,3 +29,6 @@ class ControlFlow:
 
         for row in rows:
             print(row)
+    
+    def delete_all():
+        cursor.execute("DELETE FROM books")
