@@ -1,3 +1,6 @@
+from Container import *
+
+
 import sqlite3
 connection = sqlite3.connect("BooksInLibrary.db")
 cursor = connection.cursor()
@@ -17,7 +20,6 @@ CREATE TABLE IF NOT EXISTS books (
 
 connection.commit()
 
-from Container import *
 
 class ControlFlow:
     
